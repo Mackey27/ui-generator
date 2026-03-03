@@ -263,7 +263,7 @@ html { scroll-behavior: smooth; }
 .preview-container {
   border-radius: 8px;
   padding: clamp(24px, 5vw, 64px);
-  min-height: clamp(320px, 50vh, 640px);
+  min-height: clamp(420px, 50vh, 640px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -344,11 +344,29 @@ html { scroll-behavior: smooth; }
   border-top: 1px solid var(--border);
   color: var(--muted);
   font-size: 13px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .app-footer strong {
   color: var(--fg);
   font-weight: 600;
+}
+
+.footer-meta {
+  justify-content: center;
+}
+
+.footer-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: var(--fg);
 }
 
 @keyframes fadeInUp {
@@ -479,13 +497,17 @@ html { scroll-behavior: smooth; }
 	      </div>
 		    </main>
 
-	    <footer class="app-footer max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-2 stagger-in" style="animation-delay: 0.35s;">
+	    <footer class="app-footer max-w-7xl mx-auto flex flex-col items-center justify-center gap-2 text-center stagger-in" style="animation-delay: 0.35s;">
 	      <p><strong>Template UI Generator</strong> • Build faster with reusable UI blocks</p>
-	      <div class="flex items-center gap-4">
+	      <div class="footer-meta flex flex-wrap items-center justify-center gap-4">
 	        <span>{{ categories.length }} template types</span>
 	        <span>HTML • CSS • JS</span>
 	        <span>{{ currentYear }}</span>
+	        <a class="footer-link flex items-center gap-2" href="https://github.com/mackey27" target="_blank" rel="noopener noreferrer">
+	          <i class="fab fa-github"></i>
+	        </a>
 	      </div>
+	      <p class="text-sm text-muted">Developed by <strong>Nino Mark Zaspa</strong></p>
 	    </footer>
 
 			    <div v-if="isTypeModalOpen" class="type-modal-backdrop" @click.self="closeTypeModal">
@@ -544,7 +566,7 @@ export default {
   },
 	  data() {
 	    return {
-		      categories: ['button', 'card', 'input', 'navbar', 'pricing', 'hero', 'features', 'testimonial', 'alert', 'modal', 'footer', 'badge', 'cta', 'faq', 'stats', 'profile', 'timeline', 'progress', 'table', 'accordion', 'gallery', 'sidebar', 'steps', 'contact', 'team', 'blog', 'newsletter', 'login', 'signup', 'dashboard', 'chart', 'kpi', 'avatar', 'breadcrumbs', 'tabs', 'carousel', 'skeleton', 'empty-state', 'list', 'grid', 'pagination', 'search', 'filter', 'dropdown', 'switch', 'checkbox', 'radio', 'tooltip', 'toast-banner', 'countdown'],
+			      categories: ['button', 'card', 'input', 'navbar', 'pricing', 'hero', 'features', 'testimonial', 'alert', 'modal', 'footer', 'badge', 'cta', 'faq', 'stats', 'profile', 'timeline', 'progress', 'table', 'accordion', 'steps', 'contact', 'newsletter', 'login', 'signup', 'dashboard', 'chart', 'kpi', 'avatar', 'breadcrumbs', 'tabs', 'carousel', 'skeleton', 'empty-state', 'search', 'filter', 'dropdown', 'switch', 'checkbox', 'radio', 'tooltip', 'toast-banner', 'countdown'],
 	      presets: ['modern', 'minimal', 'neumorphic', 'glassmorphism', 'gradient', 'outline', 'brutalist', 'retro'],
 	      fontOptions: [
 	        { label: 'Inter', value: "'Inter', 'Segoe UI', sans-serif" },
@@ -684,13 +706,9 @@ export default {
 			      };
 			      if (generators[this.category]) return generators[this.category];
 			      const extendedCategories = [
-			        'gallery',
-			        'sidebar',
-			        'steps',
-			        'contact',
-			        'team',
-			        'blog',
-			        'newsletter',
+				        'steps',
+				        'contact',
+				        'newsletter',
 			        'login',
 			        'signup',
 			        'dashboard',
@@ -702,10 +720,7 @@ export default {
 			        'carousel',
 			        'skeleton',
 			        'empty-state',
-			        'list',
-			        'grid',
-			        'pagination',
-			        'search',
+				        'search',
 			        'filter',
 			        'dropdown',
 			        'switch',
@@ -922,12 +937,8 @@ export default {
 		        progress: '.progress-generated',
 		        table: '.table-generated',
 		        accordion: '.accordion-generated',
-		        gallery: '.gallery-generated',
-		        sidebar: '.sidebar-generated',
 		        steps: '.steps-generated',
 		        contact: '.contact-generated',
-		        team: '.team-generated',
-		        blog: '.blog-generated',
 		        newsletter: '.newsletter-generated',
 		        login: '.login-generated',
 		        signup: '.signup-generated',
@@ -940,9 +951,6 @@ export default {
 		        carousel: '.carousel-generated',
 		        skeleton: '.skeleton-generated',
 		        'empty-state': '.empty-state-generated',
-		        list: '.list-generated',
-		        grid: '.grid-generated',
-		        pagination: '.pagination-generated',
 		        search: '.search-generated',
 		        filter: '.filter-generated',
 		        dropdown: '.dropdown-generated',
@@ -970,7 +978,7 @@ export default {
 		      const target = this.getCategoryAnimationTarget();
 		      const rootOverflow = ['tooltip', 'dropdown'].includes(this.category) ? 'visible' : 'hidden';
 		      const buttonSelector = `${target} button, ${target} .btn-generated, ${target} [role="button"]`;
-		      const interactive = `${target} a, ${target} .badge, ${target} .side-item, ${target} .filter-chip, ${target} .page-btn, ${target} .list-item, ${target} .grid-tile, ${target} .gallery-card, ${target} .team-card, ${target} .blog-card, ${target} .dashboard-metric`;
+		      const interactive = `${target} a, ${target} .badge, ${target} .filter-chip, ${target} .dashboard-metric`;
 		      return `${target} { position: relative; isolation: isolate; overflow: ${rootOverflow}; transition: transform 220ms ease, box-shadow 220ms ease; } ${target}::before, ${target}::after { content: ''; position: absolute; pointer-events: none; z-index: 0; transition: all 260ms ease; } ${target}::before { width: 140px; height: 140px; top: -90px; left: -90px; border-radius: 999px; background: radial-gradient(circle, var(--primary-color-soft) 0%, transparent 70%); opacity: 0.35; } ${target}::after { left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-color), transparent); transform: scaleX(0); transform-origin: center; opacity: 0.85; } ${target}:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(0, 0, 0, 0.12); } ${target}:hover::before { opacity: 0.7; transform: scale(1.08); } ${target}:hover::after { transform: scaleX(1); } ${target} > * { position: relative; z-index: 1; } ${buttonSelector} { position: relative; z-index: 2; display: inline-flex; align-items: center; justify-content: center; line-height: 1.2; white-space: nowrap; text-align: center; min-height: 38px; transition: transform 180ms ease, filter 180ms ease; } ${buttonSelector}:hover { transform: translateY(-1px); filter: brightness(0.98); } ${interactive} { position: relative; overflow: hidden; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; } ${interactive}::before, ${interactive}::after { content: ''; position: absolute; pointer-events: none; transition: all 220ms ease; } ${interactive}::before { inset: auto auto 0 0; width: 0; height: 2px; background: var(--primary-color); } ${interactive}::after { inset: 0; border: 1px solid transparent; border-radius: inherit; } ${interactive}:hover { transform: translateY(-1px); } ${interactive}:hover::before { width: 100%; } ${interactive}:hover::after { border-color: var(--primary-color-soft); }`;
 		    },
 		    buildGeneratedCss(baseCss) {
@@ -1161,17 +1169,6 @@ if (progressBtn && progressBar) {
 		    item.classList.toggle('is-open');
 		  });
 		});`,
-		        gallery: `document.querySelectorAll('.gallery-generated .gallery-card').forEach((card) => {
-	  card.addEventListener('click', () => {
-	    card.classList.toggle('is-picked');
-	  });
-	});`,
-		        sidebar: `document.querySelectorAll('.sidebar-generated .side-item').forEach((item) => {
-	  item.addEventListener('click', () => {
-	    document.querySelectorAll('.sidebar-generated .side-item').forEach((el) => el.classList.remove('is-active'));
-	    item.classList.add('is-active');
-	  });
-	});`,
 		        steps: `const stepItems = document.querySelectorAll('.steps-generated .step-item');
 const nextStepBtn = document.querySelector('.steps-next');
 if (stepItems.length && nextStepBtn) {
@@ -1192,18 +1189,6 @@ if (contactForm) {
     setTimeout(() => { button.textContent = 'Send Message'; }, 900);
   });
 }`,
-		        team: `document.querySelectorAll('.team-generated .team-action').forEach((btn) => {
-	  btn.addEventListener('click', () => {
-	    btn.classList.toggle('is-following');
-	    btn.textContent = btn.classList.contains('is-following') ? 'Following' : 'Follow';
-	  });
-	});`,
-		        blog: `document.querySelectorAll('.blog-generated .blog-link').forEach((link) => {
-	  link.addEventListener('click', (event) => {
-	    event.preventDefault();
-	    link.textContent = link.textContent === 'Read Story' ? 'Opened' : 'Read Story';
-	  });
-	});`,
 		        newsletter: `const newsletterForm = document.querySelector('.newsletter-generated form');
 if (newsletterForm) {
   newsletterForm.addEventListener('submit', (event) => {
@@ -1333,18 +1318,6 @@ if (emptyBtn) {
     if (desc) desc.textContent = 'First item created successfully.';
   });
 }`,
-		        list: `document.querySelectorAll('.list-generated .list-item').forEach((item) => {
-  item.addEventListener('click', () => item.classList.toggle('is-done'));
-});`,
-		        grid: `document.querySelectorAll('.grid-generated .grid-tile').forEach((tile) => {
-  tile.addEventListener('click', () => tile.classList.toggle('is-active'));
-});`,
-		        pagination: `document.querySelectorAll('.pagination-generated .page-btn').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.pagination-generated .page-btn').forEach((el) => el.classList.remove('is-active'));
-    btn.classList.add('is-active');
-  });
-});`,
 		        search: `const searchInput = document.querySelector('.search-generated input');
 const searchItems = document.querySelectorAll('.search-generated li');
 if (searchInput) {
@@ -1550,7 +1523,7 @@ if (genericBtn) {
 	      return { html, css };
 	    },
 	    generateTableTemplate() {
-	      const html = `<table class="table-generated"><thead><tr><th>Name</th><th>Plan</th><th>Status</th></tr></thead><tbody><tr><td>Ana</td><td>Pro</td><td>Active</td></tr><tr><td>Mark</td><td>Basic</td><td>Trial</td></tr><tr><td>Sara</td><td>Team</td><td>Active</td></tr></tbody></table>`;
+	      const html = `<table class="table-generated"><thead><tr><th>Name</th><th>Plan</th><th>Status</th></tr></thead><tbody><tr><td>Ana</td><td>Pro</td><td>Active</td></tr><tr><td>Mark</td><td>Basic</td><td>Trial</td></tr><tr><td>Sara</td><td>Plus</td><td>Active</td></tr></tbody></table>`;
 	      const css = `.table-generated { ${this.getBaseFontCss()} width: 100%; max-width: 620px; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,0.08); } .table-generated th, .table-generated td { padding: 10px 12px; border-bottom: 1px solid var(--primary-color-soft); text-align: left; } .table-generated th { background: var(--primary-color-soft); color: var(--primary-color-dark); font-weight: 700; } .table-generated tbody tr { color: var(--primary-color-ink); cursor: pointer; transition: background-color 0.2s ease; } .table-generated tbody tr:hover { background: rgba(255,255,255,0.94); } .table-generated tbody tr.is-selected { background: var(--primary-color-soft); }`;
 	      return { html, css };
 	    },
@@ -1561,12 +1534,8 @@ if (genericBtn) {
 		    },
 		    generateExtendedTemplate() {
 		      const templates = {
-		        gallery: `<section class="gallery-generated"><article class="gallery-card"><div class="gallery-media">01</div><div class="gallery-meta"><h4>Studio</h4><p>Visual asset</p></div></article><article class="gallery-card"><div class="gallery-media">02</div><div class="gallery-meta"><h4>Workspace</h4><p>Layout scene</p></div></article><article class="gallery-card"><div class="gallery-media">03</div><div class="gallery-meta"><h4>Mobile</h4><p>Preview frame</p></div></article><article class="gallery-card"><div class="gallery-media">04</div><div class="gallery-meta"><h4>Prototype</h4><p>Flow board</p></div></article></section>`,
-		        sidebar: `<section class="sidebar-generated"><aside><button class="side-item is-active" type="button">Overview</button><button class="side-item" type="button">Projects</button><button class="side-item" type="button">Settings</button></aside><div><h3>Overview</h3><p>Navigation + content panel.</p></div></section>`,
 		        steps: `<section class="steps-generated"><div class="step-item is-active"><strong>1</strong><p>Choose template type</p></div><div class="step-item"><strong>2</strong><p>Adjust style options</p></div><div class="step-item"><strong>3</strong><p>Copy generated code</p></div><button type="button" class="steps-next">Next Step</button></section>`,
 		        contact: `<section class="contact-generated"><form><input type="text" placeholder="Name"><input type="email" placeholder="Email"><textarea rows="3" placeholder="Message"></textarea><button type="submit">Send Message</button></form></section>`,
-		        team: `<section class="team-generated"><article class="team-card"><h4>Ana</h4><p>Designer</p><button type="button" class="team-action">Follow</button></article><article class="team-card"><h4>Mike</h4><p>Developer</p><button type="button" class="team-action">Follow</button></article><article class="team-card"><h4>Sara</h4><p>Manager</p><button type="button" class="team-action">Follow</button></article></section>`,
-		        blog: `<section class="blog-generated"><article class="blog-card"><h4>Reusable UI systems</h4><a href="#" class="blog-link">Read Story</a></article><article class="blog-card"><h4>Fast component workflow</h4><a href="#" class="blog-link">Read Story</a></article></section>`,
 		        newsletter: `<section class="newsletter-generated"><h3>Weekly UI Digest</h3><form><input type="email" placeholder="you@example.com"><button type="submit">Subscribe</button><p class="newsletter-note">No spam.</p></form></section>`,
 		        login: `<form class="login-generated"><h3>Sign In</h3><input type="email" placeholder="Email"><input type="password" placeholder="Password"><button type="button">Sign In</button></form>`,
 		        signup: `<form class="signup-generated"><h3>Create Account</h3><input type="text" placeholder="Full name"><input type="email" placeholder="Email"><input type="password" placeholder="Password"><button type="button">Create Account</button></form>`,
@@ -1579,41 +1548,30 @@ if (genericBtn) {
 		        carousel: `<section class="carousel-generated"><button type="button" class="carousel-prev">Prev</button><div class="carousel-window"><div class="carousel-track"><article class="carousel-slide"><h4>Slide 1</h4></article><article class="carousel-slide"><h4>Slide 2</h4></article><article class="carousel-slide"><h4>Slide 3</h4></article></div></div><button type="button" class="carousel-next">Next</button></section>`,
 		        skeleton: `<section class="skeleton-generated"><div class="skeleton-line lg"></div><div class="skeleton-line"></div><div class="skeleton-line sm"></div><button type="button" class="skeleton-load">Toggle Loaded</button></section>`,
 		        'empty-state': `<section class="empty-state-generated"><h3>No Data Yet</h3><p class="empty-desc">Create your first item to begin.</p><button type="button" class="empty-action">Create Item</button></section>`,
-		        list: `<ul class="list-generated"><li class="list-item">Draft UI sections</li><li class="list-item">Review generated code</li><li class="list-item">Ship to production</li></ul>`,
-		        grid: `<section class="grid-generated"><div class="grid-tile">A</div><div class="grid-tile">B</div><div class="grid-tile">C</div><div class="grid-tile">D</div><div class="grid-tile">E</div><div class="grid-tile">F</div></section>`,
-		        pagination: `<nav class="pagination-generated"><button type="button" class="page-btn">Prev</button><button type="button" class="page-btn is-active">1</button><button type="button" class="page-btn">2</button><button type="button" class="page-btn">3</button><button type="button" class="page-btn">Next</button></nav>`,
 		        search: `<section class="search-generated"><input type="search" placeholder="Search"><ul><li>Button Generator</li><li>Navbar Builder</li><li>Hero Section</li><li>Pricing Card</li></ul></section>`,
 		        filter: `<section class="filter-generated"><div class="filter-row"><button type="button" class="filter-chip is-active" data-filter="all">All</button><button type="button" class="filter-chip" data-filter="design">Design</button><button type="button" class="filter-chip" data-filter="dev">Dev</button></div><div class="filter-grid"><article class="filter-card" data-kind="design">Style Guide</article><article class="filter-card" data-kind="dev">API Tools</article><article class="filter-card" data-kind="design">Moodboard</article><article class="filter-card" data-kind="dev">Form Engine</article></div></section>`,
 		        dropdown: `<section class="dropdown-generated"><button type="button" class="dropdown-trigger">Select Theme</button><span class="dropdown-value">Light</span><div class="dropdown-menu"><button type="button">Light</button><button type="button">Dark</button><button type="button">Ocean</button></div></section>`,
 		        switch: `<section class="switch-generated"><label><input type="checkbox" checked><span class="switch-state">Enabled</span></label></section>`,
 		        checkbox: `<section class="checkbox-generated"><label><input type="checkbox" checked> Analytics</label><label><input type="checkbox"> Billing</label><label><input type="checkbox"> Alerts</label><p class="checkbox-count"></p></section>`,
 		        radio: `<section class="radio-generated"><label><input type="radio" name="plan" value="Starter" checked> Starter</label><label><input type="radio" name="plan" value="Pro"> Pro</label><label><input type="radio" name="plan" value="Enterprise"> Enterprise</label><p>Selected: <strong class="radio-value">Starter</strong></p></section>`,
-		        tooltip: `<section class="tooltip-generated"><button type="button" class="tooltip-trigger">Hover me</button><span class="tooltip-bubble">Helpful tooltip text</span></section>`,
+		        tooltip: `<section class="tooltip-generated"><div class="tooltip-anchor"><button type="button" class="tooltip-trigger">Hover me</button><span class="tooltip-bubble">Helpful tooltip text</span></div></section>`,
 		        'toast-banner': `<section class="toast-banner-generated"><button type="button" class="toast-action">Show Toast</button><div class="toast-live">Saved successfully.</div></section>`,
 		        countdown: `<section class="countdown-generated"><div class="count-item"><strong data-unit="days">03</strong><span>Days</span></div><div class="count-item"><strong data-unit="hours">06</strong><span>Hours</span></div><div class="count-item"><strong data-unit="minutes">20</strong><span>Min</span></div><div class="count-item"><strong data-unit="seconds">35</strong><span>Sec</span></div></section>`
 		      };
 		      const html = templates[this.category];
 		      if (!html) return this.generateGenericSectionTemplate();
-				      if (this.category === 'gallery') {
-				        const galleryCssFix = `.gallery-generated { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 860px; overflow: visible; } .gallery-generated::before, .gallery-generated::after { display: none; } .gallery-generated .gallery-card { position: relative; overflow: hidden; border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(8, this.borderRadius)}px; background: #fff; padding: 10px; min-height: 170px; display: grid; grid-template-rows: 1fr auto; gap: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); } .gallery-generated .gallery-card .gallery-media { border-radius: ${Math.max(6, this.borderRadius - 2)}px; background: linear-gradient(135deg, ${this.hexToRgba(this.primaryColor, 0.26)}, ${this.hexToRgba(this.primaryColor, 0.06)}); color: var(--primary-color-dark); display: grid; place-items: center; font-weight: 800; letter-spacing: 0.08em; min-height: 92px; } .gallery-generated .gallery-card .gallery-meta h4 { margin: 0; color: var(--primary-color-dark); font-size: 16px; line-height: 1.2; } .gallery-generated .gallery-card .gallery-meta p { margin: 4px 0 0; color: var(--primary-color-ink); font-size: 13px; line-height: 1.35; } .gallery-generated .gallery-card.is-picked { border-color: var(--primary-color); box-shadow: 0 10px 22px ${this.hexToRgba(this.primaryColor, 0.25)}; } @media (max-width: 640px) { .gallery-generated { grid-template-columns: 1fr; } }`;
-				        return { html, css: `${this.getExtendedTemplateCss()} ${galleryCssFix}` };
-				      }
-				      if (this.category === 'sidebar') {
-				        const sidebarCssFix = `.sidebar-generated { align-items: start; grid-template-columns: 220px minmax(0, 1fr); } .sidebar-generated .side-item { display: block; width: 100%; text-align: left; margin: 0 0 8px; } .sidebar-generated .side-item:last-child { margin-bottom: 0; } .sidebar-generated .side-item.is-active { font-weight: 700; } .sidebar-generated h3 { margin: 0 0 6px; color: var(--primary-color-dark); } .sidebar-generated p { margin: 0; color: var(--primary-color-ink); } @media (max-width: 640px) { .sidebar-generated { grid-template-columns: 1fr; } }`;
-				        return { html, css: `${this.getExtendedTemplateCss()} ${sidebarCssFix}` };
-				      }
 				      if (this.category === 'dashboard') {
 				        const dashboardCssFix = `.dashboard-generated { display: grid; gap: 12px; max-width: 840px; } .dashboard-kpi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } .dashboard-metric { display: flex; align-items: center; justify-content: space-between; gap: 10px; } .metric-icon { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--primary-color-soft); color: var(--primary-color-dark); flex-shrink: 0; } .metric-icon svg { width: 18px; height: 18px; } .metric-meta { display: grid; gap: 2px; min-width: 0; flex: 1; } .metric-meta span { color: var(--primary-color-ink); font-size: 12px; } .metric-meta .metric-value { color: var(--primary-color-dark); font-size: 22px; line-height: 1.1; } .metric-trend { color: var(--primary-color); font-size: 12px; font-weight: 700; } .dashboard-graph-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 10px; } .dashboard-bars, .dashboard-sparkline { border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; background: #fff; padding: 10px; } .dashboard-bars { min-height: 120px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); align-items: end; gap: 8px; } .dashboard-mini-bar { background: linear-gradient(180deg, var(--primary-color), var(--primary-color-dark)); border-radius: 8px 8px 4px 4px; transition: height 0.25s ease; min-height: 16px; } .dashboard-sparkline svg { width: 100%; height: 120px; display: block; } .dashboard-sparkline polyline { fill: none; stroke: var(--primary-color); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; } @media (max-width: 760px) { .dashboard-kpi-grid, .dashboard-graph-grid { grid-template-columns: 1fr; } }`;
 				        return { html, css: `${this.getExtendedTemplateCss()} ${dashboardCssFix}` };
 				      }
 				      if (this.category === 'tooltip') {
-				        const tooltipCssFix = `.tooltip-generated { max-width: 420px; min-height: 120px; display: flex; align-items: center; justify-content: center; overflow: visible; } .tooltip-generated .tooltip-bubble { left: 50%; right: auto; transform: translateX(-50%) translateY(4px); white-space: nowrap; z-index: 10; }`;
+				        const tooltipCssFix = `.tooltip-generated { max-width: 420px; min-height: 120px; display: grid; place-items: center; overflow: visible; } .tooltip-generated .tooltip-anchor { position: relative; display: inline-flex; align-items: center; justify-content: center; } .tooltip-generated .tooltip-trigger { position: relative; z-index: 2; border: 1px solid ${this.hexToRgba(this.primaryColor, 0.35)}; background: var(--primary-color); color: ${this.getContrastColor(this.primaryColor)}; padding: 10px 16px; border-radius: ${Math.max(8, this.borderRadius)}px; font-weight: 600; cursor: pointer; box-shadow: 0 8px 16px ${this.hexToRgba(this.primaryColor, 0.25)}; transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease; } .tooltip-generated .tooltip-trigger:hover { background: var(--primary-color-dark); transform: translateY(-1px); box-shadow: 0 10px 20px ${this.hexToRgba(this.primaryColor, 0.3)}; } .tooltip-generated .tooltip-trigger:focus-visible { outline: none; box-shadow: 0 0 0 3px ${this.hexToRgba(this.primaryColor, 0.25)}; } .tooltip-generated .tooltip-bubble { position: absolute; left: 50%; right: auto; bottom: calc(100% + 8px); top: auto; transform: translateX(-50%) translateY(4px) !important; white-space: nowrap; z-index: 10; animation: none; } .tooltip-generated .tooltip-trigger:hover + .tooltip-bubble, .tooltip-generated .tooltip-trigger.is-open + .tooltip-bubble { transform: translateX(-50%) translateY(0) !important; }`;
 				        return { html, css: `${this.getExtendedTemplateCss()} ${tooltipCssFix}` };
 				      }
 				      return { html, css: this.getExtendedTemplateCss() };
 				    },
 		    getExtendedTemplateCss() {
-		      return `.gallery-generated,.sidebar-generated,.steps-generated,.contact-generated,.team-generated,.blog-generated,.newsletter-generated,.login-generated,.signup-generated,.dashboard-generated,.chart-generated,.kpi-generated,.avatar-generated,.breadcrumbs-generated,.tabs-generated,.carousel-generated,.skeleton-generated,.empty-state-generated,.list-generated,.grid-generated,.pagination-generated,.search-generated,.filter-generated,.dropdown-generated,.switch-generated,.checkbox-generated,.radio-generated,.tooltip-generated,.toast-banner-generated,.countdown-generated { ${this.getBaseFontCss()} ${this.getBaseTextCss()} width: 100%; max-width: 760px; background: #fff; border: 1px solid var(--primary-color-soft); border-radius: ${this.borderRadius}px; padding: 14px; } .gallery-generated,.team-generated,.grid-generated,.filter-generated .filter-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .gallery-card,.team-card,.blog-card,.filter-card,.dashboard-metric,.list-item,.grid-tile { border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 10px; color: var(--primary-color-ink); background: #fff; } .team-generated,.blog-generated,.kpi-generated { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; } .team-generated .team-card,.blog-generated .blog-card { grid-column: span 1; } .team-action,.steps-next,.chart-randomize,.dashboard-refresh,.avatar-add,.dropdown-trigger,.toast-action,.skeleton-load,.empty-action,.contact-generated button,.newsletter-generated button,.login-generated button,.signup-generated button { border: none; background: var(--primary-color); color: #fff; border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 8px 12px; cursor: pointer; } .team-action.is-following { background: var(--primary-color-dark); } .sidebar-generated { display: grid; grid-template-columns: 220px 1fr; gap: 10px; } .sidebar-generated aside,.sidebar-generated > div { border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 10px; } .side-item,.filter-chip,.page-btn,.tab-trigger,.dropdown-menu button { border: 1px solid var(--primary-color-soft); background: #fff; color: var(--primary-color-ink); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 7px 10px; cursor: pointer; } .side-item.is-active,.filter-chip.is-active,.page-btn.is-active,.tab-trigger.is-active { background: var(--primary-color-soft); color: var(--primary-color-dark); border-color: var(--primary-color); } .steps-generated { display: grid; gap: 8px; } .step-item { display: flex; gap: 8px; align-items: center; border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 10px; } .step-item strong { width: 24px; height: 24px; border-radius: 999px; display: grid; place-items: center; background: var(--primary-color-soft); color: var(--primary-color-dark); } .step-item.is-active { border-color: var(--primary-color); } .contact-generated form,.login-generated,.signup-generated,.newsletter-generated form,.search-generated { display: grid; gap: 8px; } .contact-generated input,.contact-generated textarea,.newsletter-generated input,.login-generated input,.signup-generated input,.search-generated input { ${this.getBaseFontCss()} border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 10px 12px; color: #0f172a; } .dashboard-generated { display: grid; gap: 8px; } .dashboard-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; } .chart-generated { display: grid; gap: 8px; } .bars { height: 180px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: end; gap: 8px; } .bar { border-radius: ${Math.max(6, this.borderRadius - 2)}px ${Math.max(6, this.borderRadius - 2)}px 0 0; background: linear-gradient(180deg, var(--primary-color), var(--primary-color-dark)); transition: height 0.25s ease; } .kpi-generated { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .kpi-generated strong { display: block; color: var(--primary-color-dark); font-size: 24px; } .avatar-generated { display: flex; align-items: center; justify-content: space-between; gap: 10px; } .avatar-stack { display: flex; } .avatar-chip { width: 34px; height: 34px; border-radius: 999px; margin-right: -8px; border: 2px solid #fff; display: grid; place-items: center; background: var(--primary-color-soft); color: var(--primary-color-dark); font-weight: 700; } .breadcrumbs-generated { display: flex; align-items: center; gap: 8px; } .breadcrumbs-generated a { color: var(--primary-color-ink); text-decoration: none; font-weight: 600; } .breadcrumbs-generated a.is-active { color: var(--primary-color-dark); } .tabs-generated .tab-head { display: flex; gap: 6px; margin-bottom: 8px; } .tab-panel { display: none; border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 10px; color: var(--primary-color-ink); } .tab-panel.is-active { display: block; } .carousel-generated { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; } .carousel-window { overflow: hidden; border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; } .carousel-track { display: flex; transition: transform 0.25s ease; } .carousel-slide { min-width: 100%; padding: 14px; } .skeleton-generated { display: grid; gap: 8px; } .skeleton-line { height: 12px; border-radius: 999px; background: linear-gradient(90deg, rgba(148,163,184,0.2), rgba(148,163,184,0.45), rgba(148,163,184,0.2)); background-size: 220px 100%; animation: skeletonPulse 1.2s linear infinite; } .skeleton-line.lg { height: 16px; width: 90%; } .skeleton-line.sm { width: 45%; } .skeleton-generated.is-loaded .skeleton-line { animation: none; background: var(--primary-color-soft); } .empty-state-generated { text-align: center; border-style: dashed; } .list-generated { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; } .list-item { cursor: pointer; } .list-item.is-done { text-decoration: line-through; opacity: 0.75; } .grid-generated { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .grid-tile { min-height: 72px; display: grid; place-items: center; font-weight: 700; cursor: pointer; } .grid-tile.is-active { background: var(--primary-color-soft); border-color: var(--primary-color); } .pagination-generated { display: flex; flex-wrap: wrap; gap: 8px; } .search-generated ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; } .search-generated li { border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 8px 10px; color: var(--primary-color-ink); } .filter-generated { display: grid; gap: 8px; } .filter-row { display: flex; gap: 8px; flex-wrap: wrap; } .dropdown-generated { position: relative; display: grid; gap: 6px; max-width: 420px; } .dropdown-menu { display: none; position: absolute; left: 14px; right: 14px; top: calc(100% + 4px); background: #fff; border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 6px; box-shadow: 0 12px 24px rgba(0,0,0,0.12); z-index: 5; } .dropdown-menu.is-open { display: grid; } .switch-generated label,.checkbox-generated label,.radio-generated label { display: flex; gap: 8px; align-items: center; color: var(--primary-color-ink); } .checkbox-generated,.radio-generated { display: grid; gap: 8px; max-width: 420px; } .tooltip-generated { position: relative; max-width: 320px; text-align: center; } .tooltip-bubble { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%) translateY(4px); opacity: 0; background: #111827; color: #fff; border-radius: 6px; padding: 6px 8px; font-size: 12px; transition: all 0.2s ease; } .tooltip-trigger:hover + .tooltip-bubble,.tooltip-trigger.is-open + .tooltip-bubble { opacity: 1; transform: translateX(-50%) translateY(0); } .toast-live { margin-top: 8px; border-radius: ${Math.max(6, this.borderRadius - 2)}px; background: var(--primary-color-soft); color: var(--primary-color-dark); padding: 8px 10px; opacity: 0; transform: translateY(4px); transition: all 0.2s ease; } .toast-live.is-show { opacity: 1; transform: translateY(0); } .countdown-generated { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; max-width: 620px; } .count-item { border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; background: var(--primary-color-soft); padding: 10px; text-align: center; } .count-item strong { display: block; font-size: 22px; color: var(--primary-color-dark); } .count-item span { font-size: 12px; color: var(--primary-color-ink); } .newsletter-note,.checkbox-count { color: var(--primary-color-dark); font-size: 12px; } @keyframes skeletonPulse { from { background-position: -220px 0; } to { background-position: 220px 0; } }`;
+		      return `.steps-generated,.contact-generated,.newsletter-generated,.login-generated,.signup-generated,.dashboard-generated,.chart-generated,.kpi-generated,.avatar-generated,.breadcrumbs-generated,.tabs-generated,.carousel-generated,.skeleton-generated,.empty-state-generated,.search-generated,.filter-generated,.dropdown-generated,.switch-generated,.checkbox-generated,.radio-generated,.tooltip-generated,.toast-banner-generated,.countdown-generated { ${this.getBaseFontCss()} ${this.getBaseTextCss()} width: 100%; max-width: 760px; background: #fff; border: 1px solid var(--primary-color-soft); border-radius: ${this.borderRadius}px; padding: 14px; } .steps-next,.chart-randomize,.dashboard-refresh,.avatar-add,.dropdown-trigger,.toast-action,.skeleton-load,.empty-action,.contact-generated button,.newsletter-generated button,.login-generated button,.signup-generated button { border: none; background: var(--primary-color); color: #fff; border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 8px 12px; cursor: pointer; } .steps-generated { display: grid; gap: 8px; } .step-item { display: flex; gap: 8px; align-items: center; border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 10px; } .step-item strong { width: 24px; height: 24px; border-radius: 999px; display: grid; place-items: center; background: var(--primary-color-soft); color: var(--primary-color-dark); } .step-item.is-active { border-color: var(--primary-color); } .contact-generated form,.login-generated,.signup-generated,.newsletter-generated form,.search-generated { display: grid; gap: 8px; } .contact-generated input,.contact-generated textarea,.newsletter-generated input,.login-generated input,.signup-generated input,.search-generated input { ${this.getBaseFontCss()} border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 10px 12px; color: #0f172a; } .dashboard-generated { display: grid; gap: 8px; } .dashboard-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; } .filter-chip,.tab-trigger,.dropdown-menu button { border: 1px solid var(--primary-color-soft); background: #fff; color: var(--primary-color-ink); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 7px 10px; cursor: pointer; } .filter-chip.is-active,.tab-trigger.is-active { background: var(--primary-color-soft); color: var(--primary-color-dark); border-color: var(--primary-color); } .chart-generated { display: grid; gap: 8px; } .bars { height: 180px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: end; gap: 8px; } .bar { border-radius: ${Math.max(6, this.borderRadius - 2)}px ${Math.max(6, this.borderRadius - 2)}px 0 0; background: linear-gradient(180deg, var(--primary-color), var(--primary-color-dark)); transition: height 0.25s ease; } .kpi-generated { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .kpi-generated strong { display: block; color: var(--primary-color-dark); font-size: 24px; } .avatar-generated { display: flex; align-items: center; justify-content: space-between; gap: 10px; } .avatar-stack { display: flex; } .avatar-chip { width: 34px; height: 34px; border-radius: 999px; margin-right: -8px; border: 2px solid #fff; display: grid; place-items: center; background: var(--primary-color-soft); color: var(--primary-color-dark); font-weight: 700; } .breadcrumbs-generated { display: flex; align-items: center; gap: 8px; } .breadcrumbs-generated a { color: var(--primary-color-ink); text-decoration: none; font-weight: 600; } .breadcrumbs-generated a.is-active { color: var(--primary-color-dark); } .tabs-generated .tab-head { display: flex; gap: 6px; margin-bottom: 8px; } .tab-panel { display: none; border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 10px; color: var(--primary-color-ink); } .tab-panel.is-active { display: block; } .carousel-generated { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; } .carousel-window { overflow: hidden; border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; } .carousel-track { display: flex; transition: transform 0.25s ease; } .carousel-slide { min-width: 100%; padding: 14px; } .skeleton-generated { display: grid; gap: 8px; } .skeleton-line { height: 12px; border-radius: 999px; background: linear-gradient(90deg, rgba(148,163,184,0.2), rgba(148,163,184,0.45), rgba(148,163,184,0.2)); background-size: 220px 100%; animation: skeletonPulse 1.2s linear infinite; } .skeleton-line.lg { height: 16px; width: 90%; } .skeleton-line.sm { width: 45%; } .skeleton-generated.is-loaded .skeleton-line { animation: none; background: var(--primary-color-soft); } .empty-state-generated { text-align: center; border-style: dashed; } .search-generated ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; } .search-generated li { border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 8px 10px; color: var(--primary-color-ink); } .filter-generated { display: grid; gap: 8px; } .filter-row { display: flex; gap: 8px; flex-wrap: wrap; } .dropdown-generated { position: relative; display: grid; gap: 6px; max-width: 420px; } .dropdown-menu { display: none; position: absolute; left: 14px; right: 14px; top: calc(100% + 4px); background: #fff; border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; padding: 6px; box-shadow: 0 12px 24px rgba(0,0,0,0.12); z-index: 5; } .dropdown-menu.is-open { display: grid; } .switch-generated label,.checkbox-generated label,.radio-generated label { display: flex; gap: 8px; align-items: center; color: var(--primary-color-ink); } .checkbox-generated,.radio-generated { display: grid; gap: 8px; max-width: 420px; } .tooltip-generated { position: relative; max-width: 320px; text-align: center; } .tooltip-bubble { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%) translateY(4px); opacity: 0; background: #111827; color: #fff; border-radius: 6px; padding: 6px 8px; font-size: 12px; transition: all 0.2s ease; } .tooltip-trigger:hover + .tooltip-bubble,.tooltip-trigger.is-open + .tooltip-bubble { opacity: 1; transform: translateX(-50%) translateY(0); } .toast-live { margin-top: 8px; border-radius: ${Math.max(6, this.borderRadius - 2)}px; background: var(--primary-color-soft); color: var(--primary-color-dark); padding: 8px 10px; opacity: 0; transform: translateY(4px); transition: all 0.2s ease; } .toast-live.is-show { opacity: 1; transform: translateY(0); } .countdown-generated { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; max-width: 620px; } .count-item { border: 1px solid var(--primary-color-soft); border-radius: ${Math.max(6, this.borderRadius - 2)}px; background: var(--primary-color-soft); padding: 10px; text-align: center; } .count-item strong { display: block; font-size: 22px; color: var(--primary-color-dark); } .count-item span { font-size: 12px; color: var(--primary-color-ink); } .newsletter-note,.checkbox-count { color: var(--primary-color-dark); font-size: 12px; } @keyframes skeletonPulse { from { background-position: -220px 0; } to { background-position: 220px 0; } }`;
 		    },
 		    generateGenericSectionTemplate() {
 		      const label = this.formatCategoryLabel(this.category);
@@ -1727,3 +1685,5 @@ if (genericBtn) {
   }
 };
 </script>
+
+
