@@ -503,7 +503,7 @@ html { scroll-behavior: smooth; }
 	        <span>{{ categories.length }} template types</span>
 	        <span>HTML • CSS • JS</span>
 	        <span>{{ currentYear }}</span>
-	        <a class="footer-link flex items-center gap-2" href="https://github.com/mackey27" target="_blank" rel="noopener noreferrer">
+	        <a class="footer-link flex items-center gap-2" href="https://ui-template.vercel.app" target="_blank" rel="noopener noreferrer">
 	          <i class="fab fa-github"></i>
 	        </a>
 	      </div>
@@ -1685,5 +1685,4 @@ if (genericBtn) {
   }
 };
 </script>
-
 
